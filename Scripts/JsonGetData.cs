@@ -11,6 +11,11 @@ public class JsonGetData : MonoBehaviour
     public Text textJson;
 
     string getURL = "https://hotelapi.eastus.cloudapp.azure.com/";
+
+    public Color jsonColor;
+    public string jsonNumber;
+
+    public Texture requestTextureColor;
     // Start is called before the first frame update
     void Start()
     {
@@ -47,7 +52,29 @@ public class JsonGetData : MonoBehaviour
                     Debug.Log("Received: " + webRequest.downloadHandler.text);
                     break;
             }
+
+            //jsonColor = rootArray.root[0].randomColor;  
+
+            jsonNumber = rootArray.root[0].percentage;
         }
+    }
+
+    IEnumerator Texture_Image(string MediaURL)
+    {
+        UnityWebRequest requestTexture = UnityWebRequestTexture.GetTexture(MediaURL);
+
+        yield return requestTexture.SendWebRequest();
+
+        if (requestTexture.isNetworkError || requestTexture.isHttpError)
+        {
+            Debug.Log(requestTexture.error);
+        }
+        else
+        {
+            requestTextureColor = ((DownloadHandlerTexture)requestTexture.downloadHandler).texture as Texture2D;
+            //Sprite tempSprite = Sprite.Create(requestTextureColor, new Rect(0.0f, 0.0f, requestTextureColor.width, requestTextureColor.height), Vector2.zero);
+        }
+
     }
 
 
@@ -61,7 +88,7 @@ public class JsonGetData : MonoBehaviour
     public class Root
     {
         public string randomColor;
-        public double percentage;
+        public string percentage;
     }
 
 }
