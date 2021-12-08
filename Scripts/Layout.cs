@@ -8,13 +8,18 @@ public class Layout : MonoBehaviour
     JsonGetData jsonData;
 
     //public Transform cubesPrefabs;
-    public GameObject cubesPrefabs2;
+    public Transform cubesPrefabs;
 
+
+    //public GameObject cube2Obj;
     [SerializeField]
     int height;
     [SerializeField]
     int width;
 
+
+   //public Color cubeColor;
+   // string colorString;
     //int r;
     // Start is called before the first frame update
     void Start()
@@ -29,7 +34,7 @@ public class Layout : MonoBehaviour
         //cubesPrefabs2.transform.position = cubesPrefabs.position;
     }
 
-    private void CreateGridLayout()
+    public void CreateGridLayout()
     {
         for (int i = 0; i < width; i++)
         {
@@ -38,11 +43,15 @@ public class Layout : MonoBehaviour
                 Vector3 worldPosition = new Vector3(i, 0, j);
 
                 //Transform cubeObj = Instantiate(cubesPrefabs, worldPosition, Quaternion.identity);
-                GameObject cube2Obj = Instantiate(cubesPrefabs2, worldPosition, Quaternion.identity);
-                for(int a = 0; a < jsonData.rootArray.root.Length; a ++)
-                {
-                    //cubesPrefabs2 = jsonData.rootArray.root[0].randomColor;
-                }
+                cubesPrefabs = Instantiate(cubesPrefabs, worldPosition, Quaternion.identity);
+                //for(int a = 0; a < jsonData.rootArray.root.Length; a ++)
+                //{
+                
+                 //colorString = jsonData.rootArray.root[0].randomColor;   //cube2Obj.name = jsonData.rootArray.root[0].percentage;
+             
+                 //ColorUtility.TryParseHtmlString(colorString, out cubeColor);
+                 //cubesPrefabs.GetComponent<Renderer>().material.color = cubeColor;
+                //}
 
             }
         }

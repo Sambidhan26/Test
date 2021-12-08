@@ -6,19 +6,27 @@ using UnityEngine.Networking;
 
 public class JsonGetData : MonoBehaviour
 {
+    GameManager gameManager;
+    //Layout layout;
+
     public RootArray rootArray;
 
     public Text textJson;
 
     string getURL = "https://hotelapi.eastus.cloudapp.azure.com/";
 
-    public Color jsonColor;
+    public GameObject cubeTexturePrefab;
+
+    public string jsonColor;
     public string jsonNumber;
 
-    public Texture requestTextureColor;
+    public string jsonColor2;
+    public string jsonNumber2;
     // Start is called before the first frame update
     void Start()
     {
+        //layout = FindObjectOfType<Layout>();
+        gameManager = FindObjectOfType<GameManager>();
         StartCoroutine(GetRequest());
     }
 
@@ -35,7 +43,7 @@ public class JsonGetData : MonoBehaviour
             // Request and wait for the desired page.
             yield return webRequest.SendWebRequest();
 
-            var jsonText = webRequest.downloadHandler.text;
+            string jsonText = webRequest.downloadHandler.text;
 
             rootArray = JsonUtility.FromJson<RootArray>("{\"root\":" + jsonText + "}");
 
@@ -53,29 +61,57 @@ public class JsonGetData : MonoBehaviour
                     break;
             }
 
-            //jsonColor = rootArray.root[0].randomColor;  
+            //for (int i = 0; i < rootArray.root[0].randomColor.Length; i++)
+            //{
+                //Debug.Log("Hello World");
+                //GameObject temp = Instantiate(cubeTexturePrefab);
+                //jsonNumber = rootArray.root[0].percentage;
+                jsonColor = rootArray.root[0].randomColor;
 
-            jsonNumber = rootArray.root[0].percentage;
+                //jsonNumber2 = rootArray.root[1].percentage;
+                //jsonColor2 = rootArray.root[1].randomColor;
+            //gameManager = temp.GetComponent<GameManager>();
+            //layout.cube2Obj.name = jsonNumber;
+
+            //cubeTexturePrefab.name = jsonNumber;
+                //gameManager.jsonNumber = rootArray.root[0].percentage;
+                //jsonColor = rootArray.root[0].randomColor;
+                //jsonNumber = rootArray.root[0].percentage;
+                //cubeTexturePrefab = jsonColor;
+                //cubeTexturePrefab.GetComponent<Color>() = jsonColor.ToString;
+                //cubeTexturePrefab.name = jsonNumber;
+
+                //StartCoroutine(Texture_Image(jsonColor));
+            //}
+
+            //for (int i = 0; i < rootArray.root[0].percentage.Length; i++)
+            //{
+
+                jsonNumber = rootArray.root[0].percentage;
+                //cubeTexturePrefab.name = jsonColor;
+                //cubeTexturePrefab.name = jsonNumber;
+                //StartCoroutine(Texture_Image(jsonColor));
+            //}
         }
     }
 
-    IEnumerator Texture_Image(string MediaURL)
-    {
-        UnityWebRequest requestTexture = UnityWebRequestTexture.GetTexture(MediaURL);
+    //IEnumerator Texture_Image(string MediaURL)
+    //{
+    //    UnityWebRequest requestTexture = UnityWebRequestTexture.GetTexture(MediaURL);
 
-        yield return requestTexture.SendWebRequest();
+    //    yield return requestTexture.SendWebRequest();
 
-        if (requestTexture.isNetworkError || requestTexture.isHttpError)
-        {
-            Debug.Log(requestTexture.error);
-        }
-        else
-        {
-            requestTextureColor = ((DownloadHandlerTexture)requestTexture.downloadHandler).texture as Texture2D;
-            //Sprite tempSprite = Sprite.Create(requestTextureColor, new Rect(0.0f, 0.0f, requestTextureColor.width, requestTextureColor.height), Vector2.zero);
-        }
+    //    if (requestTexture.isNetworkError || requestTexture.isHttpError)
+    //    {
+    //        Debug.Log(requestTexture.error);
+    //    }
+    //    else
+    //    {
+    //        cubeTexturePrefab.GetComponent<Renderer>().material.mainTexture = ((DownloadHandlerTexture)requestTexture.downloadHandler).texture;
+    //        Debug.Log("Cube Color");
+    //    }
 
-    }
+    //}
 
 
     [System.Serializable]
